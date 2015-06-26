@@ -167,20 +167,21 @@ db.findConfig = function(configName){
 }
 
 db.getConfigs = function(params){
-
-  db.Config.find(function(err, configs){
+  var query = db.Config.find();
+  if(params.sortBy){
+    query.sort(params.sortBy);
+  }
+  if(params.pages){
+    query.limit(5)
+  }
+  query.exec(function(err, configs){
     if(err){
       db.emit('dbError', err)
     }
     else{
       db.emit('gotConfigs', configs);
     }
-  });
-
-  // {
-  //   sortBy: name,hostname,port,username
-  //   pageMax : 20;
-  // }
+  })
 }
 
 db.createConfig = function(config){

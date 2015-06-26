@@ -59,13 +59,15 @@
     };
     var params = [];
     var query = "";
-    var addParams = function(params){
-        params = params;
+    var addParams = function(newParams){
+        console.log("Adding Params:" + newParams);
+        params = newParams;
     }
     var getConfigs = function(){
+      console.log("Sending Params: " + params)
       var url = '/configurations';
       if(params.length > 0){  
-        for(var i = 0; i > params.length; i++){
+        for(var i = 0; i < params.length; i++){
           if(i === 0){
             query += "?" + params[i];
           }
@@ -75,7 +77,7 @@
         }
         url += query;
       }
-
+      console.log(url);
       $http.get(url,{
          username: Auth.username,
          token   : localStorage.getItem('CrudToken')
@@ -85,6 +87,7 @@
         configurations.list = configs;
       });
       query = "";
+      params =[];
     };
 
     var deleteConfig = function(config){
@@ -114,7 +117,20 @@
       })
     };
 
-    var editConfig = function(){};
+    var editConfig = function(config){
+      console.log("Editing Config");
+      console.log(": " + config.name);
+      config.auth = {
+        username : Auth.username,
+        token    : localStorage.getItem('CrudToken')
+      }
+      $http.put('/configurations/' + config.name, config)
+      .success(function(){
+        console.log("Edited Config");
+        getConfigs();
+      })
+
+    };
 
     return{
       list: configurations,
@@ -181,19 +197,23 @@
 //-----------------START EDIT CONFIG CONTROLLER-------
   app.controller('EditConfigController', function($scope, Configurations, $window, $location, Auth){
     $scope.params = [];
-    $scope.pages = null;
+    $scope.paginate = null;
     $scope.sortBy = null;
     $scope.config ={};
     $scope.username = Auth.username;
     $scope.configurations = Configurations.list;
-    $scope.sendRequest = function(params){
-      if($scope.pages){
+    $scope.sendRequest = function(){
+      if($scope.paginate){
         $scope.params.push("pages=true")
       }
       if($scope.sortBy){
         $scope.params.push("sortBy=" + $scope.sortBy);
       }
-      $scope.addParams(params);
+      $scope.addParams($scope.params);
+      $scope.paginate = null;
+      $scope.sortBy = null;
+      $scope.params = [];
+      console.log("SortBy= " +$scope.sortBy)
       $scope.getConfigs();
     }
     $scope.setSort = function(criteria){
