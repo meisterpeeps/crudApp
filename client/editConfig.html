@@ -1,0 +1,45 @@
+<div class="container">
+    <div class="col-md-5">
+      <div class="ButtonCenter">
+        <button class="btn btn-warning" ng-click ="createConfig(config)">
+          Create Server Configuration
+        </button>
+        <button class="btn btn-success" ng-click ="editConfig(config)">
+          Update Server Configuration
+        </button> 
+      </div>
+       <form name="newConfig">
+         <input type='text'class="form-control" placeholder = "name" ng-model='config.name'>
+         <input type="text" class="form-control" placeholder = "hostname" ng-model='config.hostname'>
+         <input type="number" class="form-control" placeholder = "port" ng-model='config.port'>
+         <input type="text" class="form-control" placeholder = "username" ng-model='config.username'>
+       </form> 
+    </div>
+    <div class="col-md-7">
+      <div class="ButtonCenter">
+        <button class="btn btn-primary" ng-click ="sendRequest()">Get Server Configurations</button>
+        <div>Paginate <input type="checkbox" ng-model="paginate" value="pages" /></div>
+      </div>  
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th><button type="button" ng-click ="setSort('name')" class="btn btn-info btn-xs">Name</button></th>
+            <th><button type="button" ng-click ="setSort('hostname')" class="btn btn-info btn-xs">Hostname</button></th>
+            <th><button type="button" ng-click ="setSort('port')" class="btn btn-info btn-xs">Port</button></th>
+            <th><button type="button" ng-click ="setSort('username')" class="btn btn-info btn-xs">Username</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="config in configurations.list">
+            <td> <button class="btn btn-danger" ng-click ="deleteConfig(config)">Delete</button>
+            <td>{{config.name}}</td>
+            <td>{{config.hostname}}</td>
+            <td>{{config.port}}</td>
+            <td>{{config.username}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+</div>
+

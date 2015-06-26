@@ -1,0 +1,30 @@
+{
+  "name": "crudApp",
+  "main": "index.js",
+  "version": "0.0.1",
+  "authors": [
+    "Jeff Peoples <meisterpeeps@gmail.com>"
+  ],
+  "description": "A CrudApp ProtoType",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "crud",
+    "angular"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/bower",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "angular": "~1.4.1",
+    "angular-ui-router": "~0.2.15"
+  }
+}
